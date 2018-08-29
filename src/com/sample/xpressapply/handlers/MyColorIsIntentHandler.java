@@ -14,8 +14,8 @@
 package com.sample.xpressapply.handlers;
 
 import static com.amazon.ask.request.Predicates.intentName;
-import static com.sample.xpressapply.handlers.ReviseOfferIntentHandler.COLOR_KEY;
-import static com.sample.xpressapply.handlers.ReviseOfferIntentHandler.COLOR_SLOT;
+import static com.sample.xpressapply.handlers.ReviseOfferCompletedIntentHandler.COLOR_KEY;
+import static com.sample.xpressapply.handlers.ReviseOfferCompletedIntentHandler.COLOR_SLOT;
 
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.RequestHandler;

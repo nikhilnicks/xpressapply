@@ -17,6 +17,7 @@ import static com.amazon.ask.request.Predicates.intentName;
 
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.RequestHandler;
+import com.amazon.ask.model.DialogState;
 import com.amazon.ask.model.Intent;
 import com.amazon.ask.model.IntentRequest;
 import com.amazon.ask.model.Request;
@@ -25,14 +26,22 @@ import com.amazon.ask.model.Slot;
 import java.util.Map;
 import java.util.Optional;
 
-public class ReviseOfferIntentHandler implements RequestHandler {
+public class ReviseOfferCompletedIntentHandler implements RequestHandler {
 
   public static final String COLOR_KEY = "COLOR";
   public static final String COLOR_SLOT = "Color";
 
   @Override
   public boolean canHandle(HandlerInput input) {
-    return input.matches(intentName("ReviseOffer"));
+
+    Request request = input.getRequestEnvelope().getRequest();
+    IntentRequest intentRequest = (IntentRequest) request;
+    System.out.print(request);
+    System.out.println("Completed");
+
+    return request.getType().matches("IntentRequest") &&
+        input.matches(intentName("ReviseOffer"))
+        && intentRequest.getDialogState().equals(DialogState.COMPLETED);
   }
 
   @Override
@@ -42,21 +51,19 @@ public class ReviseOfferIntentHandler implements RequestHandler {
     IntentRequest intentRequest = (IntentRequest) request;
     Intent intent = intentRequest.getIntent();
     Map<String, Slot> slots = intent.getSlots();
+    System.out.println("handling inprogres request");
 
     System.out.println(slots);
-
-    // Get the color slot from the list of slots.
-    Slot favoriteColorSlot = slots.get(COLOR_SLOT);
 
     String speechText;
     String amount = slots
         .get("amount").getValue();
 
-    String terms = (String) input.getAttributesManager().getSessionAttributes()
-        .get("terms");
+    String terms = slots
+        .get("terms").getValue();
 
-    String apr = (String) input.getAttributesManager().getSessionAttributes()
-        .get("apr");
+    String apr = slots
+        .get("apr").getValue();
 
     speechText =
         "You loan is approved for " + amount + "for APR : " + apr + "under terms of : " + terms;

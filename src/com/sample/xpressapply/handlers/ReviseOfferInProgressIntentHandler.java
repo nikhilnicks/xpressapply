@@ -13,31 +13,41 @@
 
 package com.sample.xpressapply.handlers;
 
-import static com.amazon.ask.request.Predicates.requestType;
+import static com.amazon.ask.request.Predicates.intentName;
 
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.RequestHandler;
-import com.amazon.ask.model.LaunchRequest;
+import com.amazon.ask.model.DialogState;
+import com.amazon.ask.model.IntentRequest;
+import com.amazon.ask.model.Request;
 import com.amazon.ask.model.Response;
 import java.util.Optional;
 
-public class LaunchRequestHandler implements RequestHandler {
+public class ReviseOfferInProgressIntentHandler implements RequestHandler {
+
+  public static final String COLOR_KEY = "COLOR";
+  public static final String COLOR_SLOT = "Color";
 
   @Override
   public boolean canHandle(HandlerInput input) {
-    return input.matches(requestType(LaunchRequest.class));
+
+    Request request = input.getRequestEnvelope().getRequest();
+    IntentRequest intentRequest = (IntentRequest) request;
+    System.out.println(request);
+    System.out.println("In Progress");
+    return request.getType().matches("IntentRequest") &&
+        input.matches(intentName("ReviseOffer"))
+        && !intentRequest.getDialogState().equals(DialogState.COMPLETED);
   }
 
   @Override
   public Optional<Response> handle(HandlerInput input) {
-    String speechText =
-        "Welcome to Xpress Apply Application. You’re pre-approved for a personal loan of up to $25,000 at a maximum APR of 8.98%."
-            + "Lock in a competitive fixed interest rate with our quick and simple application.";
-    String repromptText = "Would you like to proceed further to start the application ";
+
+    Request request = input.getRequestEnvelope().getRequest();
+    IntentRequest intentRequest = (IntentRequest) request;
+    System.out.println("handling inprogres request");
     return input.getResponseBuilder()
-        .withSimpleCard("ApplySession", speechText)
-        .withSpeech(speechText)
-        .withReprompt(repromptText)
+        .addDelegateDirective(intentRequest.getIntent())
         .build();
   }
 }

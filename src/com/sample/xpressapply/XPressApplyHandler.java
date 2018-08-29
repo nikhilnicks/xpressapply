@@ -16,13 +16,14 @@ package com.sample.xpressapply;
 import com.amazon.ask.Skill;
 import com.amazon.ask.SkillStreamHandler;
 import com.amazon.ask.Skills;
+import com.sample.xpressapply.handlers.LaunchRequestHandler;
+import com.sample.xpressapply.handlers.MyColorIsIntentHandler;
+import com.sample.xpressapply.handlers.ReviseOfferCompletedIntentHandler;
+import com.sample.xpressapply.handlers.ReviseOfferInProgressIntentHandler;
 import com.sample.xpressapply.handlers.predefined.CancelandStopIntentHandler;
 import com.sample.xpressapply.handlers.predefined.FallbackIntentHandler;
 import com.sample.xpressapply.handlers.predefined.HelpIntentHandler;
-import com.sample.xpressapply.handlers.LaunchRequestHandler;
-import com.sample.xpressapply.handlers.MyColorIsIntentHandler;
 import com.sample.xpressapply.handlers.predefined.SessionEndedRequestHandler;
-import com.sample.xpressapply.handlers.ReviseOfferIntentHandler;
 
 public class XPressApplyHandler extends SkillStreamHandler {
 
@@ -33,7 +34,8 @@ public class XPressApplyHandler extends SkillStreamHandler {
   private static Skill getSkill() {
     return Skills.standard()
         .addRequestHandlers(
-            new ReviseOfferIntentHandler(),
+            new ReviseOfferCompletedIntentHandler(),
+            new ReviseOfferInProgressIntentHandler(),
             new MyColorIsIntentHandler(),
             new LaunchRequestHandler(),
             new CancelandStopIntentHandler(),
