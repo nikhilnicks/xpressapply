@@ -1,0 +1,13 @@
+# dependencies
+node_modules
+.DS_Store
+npm-debug.log
+
+.idea
+target
+*.iml
+deployments
+/.settings/
+/.classpath
+/.project
+
