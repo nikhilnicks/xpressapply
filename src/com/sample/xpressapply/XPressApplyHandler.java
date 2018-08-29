@@ -34,10 +34,10 @@ public class XPressApplyHandler extends SkillStreamHandler {
   private static Skill getSkill() {
     return Skills.standard()
         .addRequestHandlers(
+            new LaunchRequestHandler(),
             new ReviseOfferCompletedIntentHandler(),
             new ReviseOfferInProgressIntentHandler(),
             new MyColorIsIntentHandler(),
-            new LaunchRequestHandler(),
             new CancelandStopIntentHandler(),
             new SessionEndedRequestHandler(),
             new HelpIntentHandler(),

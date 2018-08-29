@@ -33,15 +33,11 @@ public class ReviseOfferCompletedIntentHandler implements RequestHandler {
 
   @Override
   public boolean canHandle(HandlerInput input) {
-
-    Request request = input.getRequestEnvelope().getRequest();
-    IntentRequest intentRequest = (IntentRequest) request;
-    System.out.print(request);
-    System.out.println("Completed");
-
-    return request.getType().matches("IntentRequest") &&
+    System.out.println("Can Completed");
+    return input.getRequestEnvelope().getRequest().getType().matches("IntentRequest") &&
         input.matches(intentName("ReviseOffer"))
-        && intentRequest.getDialogState().equals(DialogState.COMPLETED);
+        && ((IntentRequest) input.getRequestEnvelope().getRequest()).getDialogState()
+        .equals(DialogState.COMPLETED);
   }
 
   @Override
