@@ -16,33 +16,31 @@ package com.sample.xpressapply;
 import com.amazon.ask.Skill;
 import com.amazon.ask.SkillStreamHandler;
 import com.amazon.ask.Skills;
-import com.sample.xpressapply.handlers.FallbackIntentHandler;
-import com.sample.xpressapply.handlers.HelpIntentHandler;
+import com.sample.xpressapply.handlers.predefined.CancelandStopIntentHandler;
+import com.sample.xpressapply.handlers.predefined.FallbackIntentHandler;
+import com.sample.xpressapply.handlers.predefined.HelpIntentHandler;
 import com.sample.xpressapply.handlers.LaunchRequestHandler;
-import com.sample.xpressapply.handlers.SessionEndedRequestHandler;
-import com.sample.xpressapply.handlers.WhatsMyColorIntentHandler;
-import com.sample.xpressapply.handlers.CancelandStopIntentHandler;
 import com.sample.xpressapply.handlers.MyColorIsIntentHandler;
+import com.sample.xpressapply.handlers.predefined.SessionEndedRequestHandler;
+import com.sample.xpressapply.handlers.ReviseOfferIntentHandler;
 
-public class ColorPickerStreamHandler extends SkillStreamHandler {
+public class XPressApplyHandler extends SkillStreamHandler {
 
-    private static Skill getSkill() {
-        return Skills.standard()
-                .addRequestHandlers(
-                        new WhatsMyColorIntentHandler(),
-                        new MyColorIsIntentHandler(),
-                        new LaunchRequestHandler(),
-                        new CancelandStopIntentHandler(),
-                        new SessionEndedRequestHandler(),
-                        new HelpIntentHandler(),
-                        new FallbackIntentHandler())
-                // Add your skill id below
-                //.withSkillId("")
-                .build();
-    }
+  public XPressApplyHandler() {
+    super(getSkill());
+  }
 
-    public ColorPickerStreamHandler() {
-        super(getSkill());
-    }
+  private static Skill getSkill() {
+    return Skills.standard()
+        .addRequestHandlers(
+            new ReviseOfferIntentHandler(),
+            new MyColorIsIntentHandler(),
+            new LaunchRequestHandler(),
+            new CancelandStopIntentHandler(),
+            new SessionEndedRequestHandler(),
+            new HelpIntentHandler(),
+            new FallbackIntentHandler())
+        .build();
+  }
 
 }

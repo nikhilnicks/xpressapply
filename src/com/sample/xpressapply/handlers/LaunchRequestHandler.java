@@ -13,29 +13,31 @@
 
 package com.sample.xpressapply.handlers;
 
+import static com.amazon.ask.request.Predicates.requestType;
+
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.RequestHandler;
 import com.amazon.ask.model.LaunchRequest;
 import com.amazon.ask.model.Response;
-
 import java.util.Optional;
 
-import static com.amazon.ask.request.Predicates.requestType;
-
 public class LaunchRequestHandler implements RequestHandler {
-    @Override
-    public boolean canHandle(HandlerInput input) {
-        return input.matches(requestType(LaunchRequest.class));
-    }
 
-    @Override
-    public Optional<Response> handle(HandlerInput input) {
-        String speechText = "Welcome to the Alexa Skills Kit sample. Please tell me your favorite color by saying, my favorite color is red";
-        String repromptText = "Please tell me your favorite color by saying, my favorite color is red";
-        return input.getResponseBuilder()
-                .withSimpleCard("ColorSession", speechText)
-                .withSpeech(speechText)
-                .withReprompt(repromptText)
-                .build();
-    }
+  @Override
+  public boolean canHandle(HandlerInput input) {
+    return input.matches(requestType(LaunchRequest.class));
+  }
+
+  @Override
+  public Optional<Response> handle(HandlerInput input) {
+    String speechText =
+        "Welcome to Xpress Apply Application. You’re pre-approved for a personal loan of up to $25,000 at a maximum APR of 8.98%."
+            + "Lock in a competitive fixed interest rate with our quick and simple application. Tell us where you want us to send your loan funds and the amount you need up to your pre-approved amount. Then, select the monthly payment option that works for you.";
+    String repromptText = "Would you like to proceed further to start the application ";
+    return input.getResponseBuilder()
+        .withSimpleCard("ApplySession", speechText)
+        .withSpeech(speechText)
+        .withReprompt(repromptText)
+        .build();
+  }
 }
