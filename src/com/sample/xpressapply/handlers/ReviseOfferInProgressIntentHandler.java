@@ -25,12 +25,12 @@ import java.util.Optional;
 
 public class ReviseOfferInProgressIntentHandler implements RequestHandler {
 
-  public static final String COLOR_KEY = "COLOR";
-  public static final String COLOR_SLOT = "Color";
-
   @Override
   public boolean canHandle(HandlerInput input) {
-    System.out.println("Inprogres ");
+    System.out.println("Request Type : " + input.getRequestEnvelope().getRequest().getType());
+    System.out.print("In progress , state : " + (
+        input.getRequestEnvelope().getRequest().getType().matches("IntentRequest")
+            ? ((IntentRequest) input.getRequestEnvelope().getRequest()).getDialogState() : ""));
     return input.getRequestEnvelope().getRequest().getType().matches("IntentRequest") &&
         input.matches(intentName("ReviseOffer"))
         && !((IntentRequest) input.getRequestEnvelope().getRequest()).getDialogState()
@@ -42,7 +42,7 @@ public class ReviseOfferInProgressIntentHandler implements RequestHandler {
 
     Request request = input.getRequestEnvelope().getRequest();
     IntentRequest intentRequest = (IntentRequest) request;
-    System.out.println("handling inprogres request");
+    System.out.print("handling in-progress request");
     return input.getResponseBuilder()
         .addDelegateDirective(intentRequest.getIntent())
         .build();

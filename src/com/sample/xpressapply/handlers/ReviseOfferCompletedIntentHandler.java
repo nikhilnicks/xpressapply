@@ -28,12 +28,13 @@ import java.util.Optional;
 
 public class ReviseOfferCompletedIntentHandler implements RequestHandler {
 
-  public static final String COLOR_KEY = "COLOR";
-  public static final String COLOR_SLOT = "Color";
 
   @Override
   public boolean canHandle(HandlerInput input) {
-    System.out.println("Can Completed");
+    System.out.println("Request Type : " + input.getRequestEnvelope().getRequest().getType());
+    System.out.print("trying complete , state : " + (
+        input.getRequestEnvelope().getRequest().getType().matches("IntentRequest")
+            ? ((IntentRequest) input.getRequestEnvelope().getRequest()).getDialogState() : ""));
     return input.getRequestEnvelope().getRequest().getType().matches("IntentRequest") &&
         input.matches(intentName("ReviseOffer"))
         && ((IntentRequest) input.getRequestEnvelope().getRequest()).getDialogState()
@@ -47,8 +48,8 @@ public class ReviseOfferCompletedIntentHandler implements RequestHandler {
     IntentRequest intentRequest = (IntentRequest) request;
     Intent intent = intentRequest.getIntent();
     Map<String, Slot> slots = intent.getSlots();
-    System.out.println("handling inprogres request");
-
+    System.out.print("handling complete request");
+    boolean restart = false;
     System.out.println(slots);
 
     String speechText;
@@ -62,11 +63,21 @@ public class ReviseOfferCompletedIntentHandler implements RequestHandler {
         .get("apr").getValue();
 
     speechText =
-        "You loan is approved for " + amount + "for APR : " + apr + "under terms of : " + terms;
-
-    return input.getResponseBuilder()
-        .withSpeech(speechText)
-        .withSimpleCard("ApplySession", speechText)
-        .build();
+        "You loan is approved for " + amount + " for APR : " + apr + " under terms of : " + terms;
+    if (restart) {
+      return input.getResponseBuilder()
+          .withSpeech(speechText)
+          .withSimpleCard("ApplySession", speechText)
+          .build();
+    } else {
+      System.out.println("Trying to restart the intent again after completion");
+      return input.getResponseBuilder()
+          .withSpeech(
+              "We are unable to approve the loan amount that you have requested for the terms and apr at the moment. "
+                  + "Please Say, Start Over to start over your processing")
+          .withShouldEndSession(false)
+          .withSimpleCard("ApplySession", speechText)
+          .build();
+    }
   }
 }

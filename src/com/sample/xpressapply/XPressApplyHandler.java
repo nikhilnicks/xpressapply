@@ -17,7 +17,6 @@ import com.amazon.ask.Skill;
 import com.amazon.ask.SkillStreamHandler;
 import com.amazon.ask.Skills;
 import com.sample.xpressapply.handlers.LaunchRequestHandler;
-import com.sample.xpressapply.handlers.MyColorIsIntentHandler;
 import com.sample.xpressapply.handlers.ReviseOfferCompletedIntentHandler;
 import com.sample.xpressapply.handlers.ReviseOfferInProgressIntentHandler;
 import com.sample.xpressapply.handlers.predefined.CancelandStopIntentHandler;
@@ -37,7 +36,6 @@ public class XPressApplyHandler extends SkillStreamHandler {
             new LaunchRequestHandler(),
             new ReviseOfferCompletedIntentHandler(),
             new ReviseOfferInProgressIntentHandler(),
-            new MyColorIsIntentHandler(),
             new CancelandStopIntentHandler(),
             new SessionEndedRequestHandler(),
             new HelpIntentHandler(),
