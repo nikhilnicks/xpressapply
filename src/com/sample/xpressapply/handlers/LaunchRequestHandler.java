@@ -32,8 +32,8 @@ public class LaunchRequestHandler implements RequestHandler {
   public Optional<Response> handle(HandlerInput input) {
     String speechText =
         "Welcome to Xpress Apply Application. You’re pre-approved for a personal loan of up to $25,000 at a maximum APR of 8.98%."
-            + " Lock in a competitive fixed interest rate with our quick and simple application.";
-    String repromptText = "Would you like to proceed further to start the application ?";
+            + " Would you like to proceed further to start the application or looking for a better offer ?";
+    String repromptText = "Would you like to proceed further to start the application or looking for a better offer ?";
     return input.getResponseBuilder()
         .withSimpleCard("ApplySession", speechText)
         .withSpeech(speechText)

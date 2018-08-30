@@ -11,31 +11,36 @@
      the specific language governing permissions and limitations under the License.
 */
 
-package com.sample.xpressapply.handlers.predefined;
+package com.sample.xpressapply.handlers;
 
 import static com.amazon.ask.request.Predicates.intentName;
 
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.RequestHandler;
+import com.amazon.ask.model.IntentRequest;
+import com.amazon.ask.model.Request;
 import com.amazon.ask.model.Response;
 import java.util.Optional;
 
-public class HelpIntentHandler implements RequestHandler {
+public class CurrentOfferIntentHandler implements RequestHandler {
 
   @Override
   public boolean canHandle(HandlerInput input) {
-    return input.matches(intentName("AMAZON.HelpIntent"));
+    System.out.println("Request Type : " + input.getRequestEnvelope().getRequest().getType());
+    System.out.print("current offers , state : " + (
+        input.getRequestEnvelope().getRequest().getType().matches("IntentRequest")
+            ? ((IntentRequest) input.getRequestEnvelope().getRequest()).getDialogState() : ""));
+    return input.getRequestEnvelope().getRequest().getType().matches("IntentRequest") &&
+        input.matches(intentName("currentoffer"));
   }
 
   @Override
   public Optional<Response> handle(HandlerInput input) {
-    String speechText = "You can say start over or say get a better offer";
-    String repromptText = "You can say start over or say get a better offer";
-    return input.getResponseBuilder()
-        .withSimpleCard("ApplySession", speechText)
-        .withSpeech(speechText)
-        .withReprompt(repromptText)
-        .withShouldEndSession(false)
-        .build();
+
+    Request request = input.getRequestEnvelope().getRequest();
+    IntentRequest intentRequest = (IntentRequest) request;
+    System.out.print("current offer handle");
+    LaunchRequestHandler launchRequestHandler = new LaunchRequestHandler();
+    return launchRequestHandler.handle(input);
   }
 }

@@ -15,10 +15,12 @@ package com.sample.xpressapply.handlers;
 
 import static com.amazon.ask.request.Predicates.intentName;
 
+import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.RequestHandler;
 import com.amazon.ask.model.DialogState;
 import com.amazon.ask.model.Intent;
+import com.amazon.ask.model.IntentConfirmationStatus;
 import com.amazon.ask.model.IntentRequest;
 import com.amazon.ask.model.Request;
 import com.amazon.ask.model.Response;
@@ -26,7 +28,7 @@ import com.amazon.ask.model.Slot;
 import java.util.Map;
 import java.util.Optional;
 
-public class ReviseOfferCompletedIntentHandler implements RequestHandler {
+public class ProcessOfferCompletedIntentHandler implements RequestHandler {
 
 
   @Override
@@ -36,7 +38,7 @@ public class ReviseOfferCompletedIntentHandler implements RequestHandler {
         input.getRequestEnvelope().getRequest().getType().matches("IntentRequest")
             ? ((IntentRequest) input.getRequestEnvelope().getRequest()).getDialogState() : ""));
     return input.getRequestEnvelope().getRequest().getType().matches("IntentRequest") &&
-        input.matches(intentName("ReviseOffer"))
+        input.matches(intentName("processoffer"))
         && ((IntentRequest) input.getRequestEnvelope().getRequest()).getDialogState()
         .equals(DialogState.COMPLETED);
   }
@@ -48,43 +50,44 @@ public class ReviseOfferCompletedIntentHandler implements RequestHandler {
     IntentRequest intentRequest = (IntentRequest) request;
     Intent intent = intentRequest.getIntent();
     Map<String, Slot> slots = intent.getSlots();
-    System.out.print("handling complete request");
+    System.out.print("handling complete request - process offer");
     boolean restart = false;
-    // System.out.println(slots);
-    String speechText;
-    String amount = slots
-        .get("amount").getValue();
+    System.out.println(slots);
 
-    String terms = slots
-        .get("terms").getValue();
+    if (intentRequest.getIntent().getConfirmationStatus().equals(IntentConfirmationStatus.DENIED)) {
 
-    String apr = slots
-        .get("apr").getValue();
+      AttributesManager attributesManager = input.getAttributesManager();
 
-    restart = Integer.valueOf(amount) < 50000;
-    //TODO: identify the flag and speech text accordingly.
-    {
-      if (restart) {
-        speechText = "<speak>You loan is approved for " + amount
-            + " for <say-as interpret-as='spell-out'>APR</say-as> " + apr + "% under terms of "
-            + terms + " </speak>";
-        return input.getResponseBuilder()
-            .withSpeech(speechText)
-            .withSimpleCard("ApplySession", speechText)
-            .withShouldEndSession(false)
-            //.addDelegateDirective(Intent.builder().withName("processoffer").withConfirmationStatus(IntentConfirmationStatus.NONE).build())
-            .build();
-      } else {
-        System.out.println("Trying to restart the intent again after completion");
-        speechText =
-            "<speak>We are unable to approve the loan amount that you have requested for the terms and <say-as interpret-as='spell-out'>APR</say-as> at the moment. "
-                + "Please Say <emphasis level='strong'>Start Over</emphasis> to restart your application</speak>";
-        return input.getResponseBuilder()
-            .withSpeech(speechText)
-            .withShouldEndSession(false)
-            .withSimpleCard("ApplySession", speechText)
-            .build();
-      }
+      Map<String, Object> sessionAttributes = attributesManager.getSessionAttributes();
+
+      sessionAttributes.putAll(intent.getSlots());
+
+      attributesManager.setSessionAttributes(sessionAttributes);
+
+      return input.getResponseBuilder()
+          .withSpeech(
+              "Your application is cancelled. You can say start application to accept the current offer or say better offer to receive a customized quote.")
+          .withReprompt(
+              "Your application is cancelled. You can say start application to accept the current offer or say better offer to receive a customized quote.")
+          .build();
     }
+
+    String speechText;
+    String acctNbr = slots
+        .get("acctNbr").getValue();
+
+    String routingNbr = slots
+        .get("routingNbr").getValue();
+
+    speechText =
+        "<speak>Your loan application is processed to account number <say-as interpret-as='spell-out'>"
+            + acctNbr
+            + "</say-as> with routing number <say-as interpret-as='spell-out'>" + routingNbr
+            + "</say-as></speak>";
+
+    return input.getResponseBuilder()
+        .withSpeech(speechText)
+        .withSimpleCard("ApplySession", speechText)
+        .build();
   }
 }

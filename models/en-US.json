@@ -1,251 +1,320 @@
 {
-    "interactionModel": {
-        "languageModel": {
-            "invocationName": "xpress apply",
-            "intents": [
-                {
-                    "name": "AMAZON.CancelIntent",
-                    "samples": []
-                },
-                {
-                    "name": "AMAZON.HelpIntent",
-                    "samples": []
-                },
-                {
-                    "name": "AMAZON.StopIntent",
-                    "samples": []
-                },
-                {
-                    "name": "ReviseOffer",
-                    "slots": [
-                        {
-                            "name": "amount",
-                            "type": "LOAN_AMOUNT",
-                            "samples": [
-                                "i'd like loan amount of {amount} ",
-                                "{amount} "
-                            ]
-                        },
-                        {
-                            "name": "terms",
-                            "type": "LOAN_TERMS",
-                            "samples": [
-                                "{terms} ",
-                                "I am interested in loan terms of {terms}  months "
-                            ]
-                        },
-                        {
-                            "name": "apr",
-                            "type": "APR",
-                            "samples": [
-                                "{apr} ",
-                                "I would like my APR to be around {apr} "
-                            ]
-                        }
-                    ],
-                    "samples": [
-                        "Can you revise my APR",
-                        "Can you give me a better offer",
-                        "I want a loan for  {amount}  APR of {apr}  and terms of  {terms} months "
-                    ]
-                },
-                {
-                    "name": "NegotiateOffer",
-                    "slots": [
-                        {
-                            "name": "amount",
-                            "type": "LOAN_AMOUNT",
-                            "samples": [
-                                "i'd like loan amount of {amount} ",
-                                "{amount} "
-                            ]
-                        },
-                        {
-                            "name": "terms",
-                            "type": "LOAN_TERMS",
-                            "samples": [
-                                "{terms} ",
-                                "I am interested in loan terms of {terms}  months "
-                            ]
-                        },
-                        {
-                            "name": "apr",
-                            "type": "APR",
-                            "samples": [
-                                "{apr} ",
-                                "I would like my APR to be around {apr} "
-                            ]
-                        }
-                    ],
-                    "samples": [
-                        "negotiate",
-                        "I want to negotiate amount"
-                    ]
-                }
-            ],
-            "types": [
-                {
-                    "name": "APR",
-                    "values": [
-                        {
-                            "name": {
-                                "value": "5%"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "LOAN_AMOUNT",
-                    "values": [
-                        {
-                            "name": {
-                                "value": "50000$"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "LOAN_TERMS",
-                    "values": [
-                        {
-                            "name": {
-                                "value": "6  months"
-                            }
-                        }
-                    ]
-                }
-            ]
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "xpress apply",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
         },
-        "dialog": {
-            "intents": [
-                {
-                    "name": "ReviseOffer",
-                    "confirmationRequired": true,
-                    "prompts": {
-                        "confirmation": "Confirm.Intent.639410930711"
-                    },
-                    "slots": [
-                        {
-                            "name": "amount",
-                            "type": "LOAN_AMOUNT",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.AMOUNT"
-                            }
-                        },
-                        {
-                            "name": "apr",
-                            "type": "APR",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.APR"
-                            }
-                        },
-                        {
-                            "name": "terms",
-                            "type": "LOAN_TERMS",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.TERMS"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "NegotiateOffer",
-                    "confirmationRequired": true,
-                    "prompts": {
-                        "confirmation": "Confirm.Negotiate.Intent.639410930711"
-                    },
-                    "slots": [
-                        {
-                            "name": "amount",
-                            "type": "LOAN_AMOUNT",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.AMOUNT"
-                            }
-                        },
-                        {
-                            "name": "terms",
-                            "type": "LOAN_TERMS",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        },
-                        {
-                            "name": "apr",
-                            "type": "APR",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        }
-                    ]
-                }
-            ]
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
         },
-        "prompts": [
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "ReviseOffer",
+          "slots": [
             {
-                "id": "Elicit.Slot.AMOUNT",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "how much loan amount do you want ?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": " How much amount you want ? "
-                    }
-                ]
+              "name": "amount",
+              "type": "LOAN_AMOUNT",
+              "samples": [
+                "i'd like loan amount of {amount}",
+                "{amount}"
+              ]
             },
             {
-                "id": "Elicit.Slot.APR",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": " What APR you need ?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": " what APR ?"
-                    }
-                ]
+              "name": "terms",
+              "type": "LOAN_TERMS",
+              "samples": [
+                "{terms}",
+                "I am interested in loan terms of {terms} months"
+              ]
             },
             {
-                "id": "Elicit.Slot.TERMS",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What terms do you prefer ?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "what is the duration of your terms?"
-                    }
-                ]
-            },
-            {
-                "id": "Confirm.Intent.639410930711",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "Based on your excellent credit history, We are going to approve loan of {amount} $ for a APR of {apr} % and duration of {terms} months, do you want to proceed ?"
-                    }
-                ]
-            },
-            {
-                "id": "Confirm.Negotiate.Intent.639410930711",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "Based on your excellent credit history, We are going to approve loan of {amount} $ for a TBD APR  % and duration of TBD months, do you want to proceed ?"
-                    }
-                ]
+              "name": "apr",
+              "type": "APR",
+              "samples": [
+                "{apr}",
+                "I would like my APR to be around {apr}"
+              ]
             }
+          ],
+          "samples": [
+            "revised loan application",
+            "better offer",
+            "start over",
+            "Can you revise my APR",
+            "Can you give me a better offer",
+            "I want a loan for {amount} APR of {apr} and terms of {terms} months"
+          ]
+        },
+        {
+          "name": "processoffer",
+          "slots": [
+            {
+              "name": "acctNbr",
+              "type": "AMAZON.NUMBER",
+              "samples": [
+                "it is {acctNbr}",
+                "{acctNbr}"
+              ]
+            },
+            {
+              "name": "routingNbr",
+              "type": "AMAZON.NUMBER",
+              "samples": [
+                "{routingNbr}",
+                "it is {routingNbr}"
+              ]
+            }
+          ],
+          "samples": [
+            "process this offer",
+            "start application",
+            "process offer"
+          ]
+        },
+        {
+          "name": "AMAZON.YesIntent",
+          "samples": [
+            "yes please",
+            "yayy",
+            "yay",
+            "yeah",
+            "yes"
+          ]
+        },
+        {
+          "name": "AMAZON.NoIntent",
+          "samples": [
+            "No thanks",
+            "No"
+          ]
+        },
+        {
+          "name": "currentoffer",
+          "slots": [],
+          "samples": [
+            "offers",
+            "what is the loan offer",
+            "personal loan offer",
+            "current loan offer",
+            "what is the current loan offer",
+            "loan offer",
+            "offer",
+            "current offers"
+          ]
+        }
+      ],
+      "types": [
+        {
+          "name": "APR",
+          "values": [
+            {
+              "name": {
+                "value": "5%"
+              }
+            }
+          ]
+        },
+        {
+          "name": "LOAN_AMOUNT",
+          "values": [
+            {
+              "name": {
+                "value": "50000$"
+              }
+            }
+          ]
+        },
+        {
+          "name": "LOAN_TERMS",
+          "values": [
+            {
+              "name": {
+                "value": "6 months"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "dialog": {
+      "intents": [
+        {
+          "name": "ReviseOffer",
+          "confirmationRequired": true,
+          "prompts": {
+            "confirmation": "Confirm.Intent.639410930711"
+          },
+          "slots": [
+            {
+              "name": "amount",
+              "type": "LOAN_AMOUNT",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.AMOUNT"
+              }
+            },
+            {
+              "name": "apr",
+              "type": "APR",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.APR"
+              }
+            },
+            {
+              "name": "terms",
+              "type": "LOAN_TERMS",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.TERMS"
+              }
+            }
+          ]
+        },
+        {
+          "name": "processoffer",
+          "confirmationRequired": true,
+          "prompts": {
+            "confirmation": "Confirm.Intent.676034198087"
+          },
+          "slots": [
+            {
+              "name": "acctNbr",
+              "type": "AMAZON.NUMBER",
+              "confirmationRequired": true,
+              "elicitationRequired": true,
+              "prompts": {
+                "confirmation": "Confirm.Slot.676034198087.1169797641631",
+                "elicitation": "Elicit.Slot.676034198087.1169797641631"
+              }
+            },
+            {
+              "name": "routingNbr",
+              "type": "AMAZON.NUMBER",
+              "confirmationRequired": true,
+              "elicitationRequired": true,
+              "prompts": {
+                "confirmation": "Confirm.Slot.676034198087.136178393922",
+                "elicitation": "Elicit.Slot.676034198087.136178393922"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "prompts": [
+      {
+        "id": "Elicit.Slot.AMOUNT",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "how much loan amount do you want ?"
+          },
+          {
+            "type": "PlainText",
+            "value": " How much amount you want ?"
+          }
         ]
-    }
+      },
+      {
+        "id": "Elicit.Slot.APR",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": " What APR you need ?"
+          },
+          {
+            "type": "PlainText",
+            "value": " what APR ?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.TERMS",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "What terms do you prefer ?"
+          },
+          {
+            "type": "PlainText",
+            "value": "what is the duration of your terms?"
+          }
+        ]
+      },
+      {
+        "id": "Confirm.Intent.639410930711",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "we are going to process loan in amount {amount} and APR of {apr}% and terms of {terms} months. Please confirm ?"
+          }
+        ]
+      },
+      {
+        "id": "Confirm.Slot.1055773155515.310891085906",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "How does {amount} sounds like ?"
+          }
+        ]
+      },
+      {
+        "id": "Confirm.Intent.676034198087",
+        "variations": [
+          {
+            "type": "SSML",
+            "value": "<speak>Your loan application is getting processed to account number <say-as interpret-as='spell-out'>{acctNbr}</say-as> with  routing number <say-as interpret-as='spell-out'>{routingNbr}</say-as>. Please confirm ?</speak>"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.676034198087.1169797641631",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Please provide account number"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.676034198087.136178393922",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Please provide routing number"
+          }
+        ]
+      },
+      {
+        "id": "Confirm.Slot.676034198087.1169797641631",
+        "variations": [
+          {
+            "type": "SSML",
+            "value": "<speak>Your account number is <say-as interpret-as='spell-out'>{acctNbr}</say-as> .  Please confirm ?</speak>"
+          }
+        ]
+      },
+      {
+        "id": "Confirm.Slot.676034198087.136178393922",
+        "variations": [
+          {
+            "type": "SSML",
+            "value": "<speak>Your routing number is <say-as interpret-as='spell-out'>{routingNbr}</say-as> . Please confirm ?</speak>"
+          }
+        ]
+      }
+    ]
+  }
 }
